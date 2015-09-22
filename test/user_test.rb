@@ -8,4 +8,9 @@ class UserTest < ActiveSupport::TestCase
         assert_equal "Marc", user.name
     end
 
+    def test_find
+        user = User.find(1)
+        assert_kind_of User, user
+        assert_equal 1, user.id
+    end
 end
