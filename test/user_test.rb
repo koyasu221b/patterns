@@ -1,4 +1,5 @@
 require "test_helper"
+require "active_record"
 require "user"
 
 class UserTest < ActiveSupport::TestCase
