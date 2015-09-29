@@ -21,6 +21,31 @@
 #
 # run my_proc
 
+
+Routes = {
+  "GET" => {
+  }
+}
+
+def get(path, &block)
+    Routes["GET"][path] = block
+end
+
+get "/" do
+    "awesome!"
+end
+
+get "/hello" do
+    "hello awesome!"
+end
+
 run -> env do
-  [200, {}, ['hi']]
+  method = env["REQUEST_METHOD"]
+  path = env["PATH_INFO"]
+  if block = Routes[method][path]
+      body = block.call
+      [200, {}, [body]]
+  else
+      [404, {}, ["Not found"]]
+  end
 end
