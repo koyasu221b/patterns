@@ -1,5 +1,16 @@
 require "action_controller"
 require "application_controller"
+require "active_record"
+require "router"
+require "config/routes"
+
+class Object
+    def  const_missing(name)
+        #name # :user => "user"
+        require name.to_s.downcase
+    end
+end
+
 class Application
     def call(env)
         request = Rack::Request.new(env)
@@ -18,8 +29,9 @@ class Application
     end
 
     def route(path)
-        _, controller_name, action_name = path.split("/") # => "/home/index" => ["", "home", "index"]
-        [controller_name || "home", action_name || "index"]
+        # _, controller_name, action_name = path.split("/") # => "/home/index" => ["", "home", "index"]
+        # [controller_name || "home", action_name || "index"]
+        Routes.recognize(path)
     end
 
     def load_controller_class(name)
