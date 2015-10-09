@@ -60,3 +60,6 @@ class FiltersTest < ActiveSupport::TestCase
     #               "/around1"], out
   end
 end
+
+
+puts FiltersTestController.ancestors
